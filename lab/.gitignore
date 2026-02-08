@@ -1,2 +1,5 @@
-*_files/*
+# 忽略所有 _files 目录及其内容
+*_files/
+
+# 忽略所有 HTML 文件
 *.html
