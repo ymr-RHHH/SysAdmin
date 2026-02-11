@@ -352,6 +352,72 @@ done
 > done
 > ```
 
+<br>
+
+# Function
+
+```shell
+function greet(){
+	echo "hey there $1" # $1 means the first argument you transmit in
+}
+
+greet "sysAdmin"
+
+#hey there sysAdmin
+```
+
+
+
+# Streams
+
+Stream is the way we can edit files with commands. 
+
+- ## Redirection
+
+  Use `>` to output to somewhere else, like a text file.
+
+  ```shell
+  echo "hello" > out.txt
+  # this will overwritte out.txt with  'hello'
+  ```
+
+  And redirection also have another form:
+
+  Use `<` to take input frome a file
+
+  ```shell
+  sort < file
+  ```
+
+- ##Append
+
+  Use `>>` to append output to a file. If file is empty, works the same as `>`
+
+  ```shell
+  echo "hello" >> out.txt
+  # this command will append "hello" to the end line of out.txt 
+  ```
+  
+- ## Pipes
+  
+  Take output of first command and "pipe" it into the second one, connecting stdin and stdout.
+  
+  ```shell
+  command1 | command2
+  ```
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
 
 
 

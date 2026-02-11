@@ -4,7 +4,7 @@ Welcome to Lab 2! In this lab you will be learning how to work productively in a
 
 Remember to submit your answers in the Gradescope assignment!
 
-Don’t forget to use Google and `man` when stuck. The resources linked at the bottom may be helpful as well.
+Don't forget to use Google and `man` when stuck. The resources linked at the bottom may be helpful as well.
 
 ![XKCD 1319](Lab 2 - Core Shell & Shell Scripting _ OCF Sysadmin DeCal.assets/automation.png)
 
@@ -13,16 +13,16 @@ This lab can be completed either on tsunami by logging in using ssh or on the VM
 
 ## A quick intro to `vim` 
 
-`vim` is a very widely used text editor. It’s well known for its customizability and plethora of keybinds. While it may be somewhat unintuitive to use at first (since a lot of common keybinds for things like copy-paste, saving, or exiting don’t do what you think they will), it’s well worth learning about, and you’ll certainly come across it all the time when working in the shell!
+`vim` is a very widely used text editor. It's well known for its customizability and plethora of keybinds. While it may be somewhat unintuitive to use at first (since a lot of common keybinds for things like copy-paste, saving, or exiting don't do what you think they will), it's well worth learning about, and you'll certainly come across it all the time when working in the shell!
 
 ### Why `vim`? 
--   It’s a descendant of vi, which was written in Berkeley by Bill Joy, who went on to found Sun Microsystems.
+-   It's a descendant of vi, which was written in Berkeley by Bill Joy, who went on to found Sun Microsystems.
 -   Sometimes you will be suddenly thrown into `vim` via merging git conflicts or other programs.
--   It’s included in practically every UNIX environment.
+-   It's included in practically every UNIX environment.
 -   You can be very productive when familiar with it.
 
 ### Hello World 
-To get started with learning `vim`, run the command `vimtutor`. This will walk you through the below material in an interactive manner! You aren’t required to finish the entire tutorial, but we encourage you to at least complete lesson 1. You can then use this section as reference if you forget anything.
+To get started with learning `vim`, run the command `vimtutor`. This will walk you through the below material in an interactive manner! You aren't required to finish the entire tutorial, but we encourage you to at least complete lesson 1. You can then use this section as reference if you forget anything.
 
 ### The `vim` Modes
 Vim is a modal text editor, meaning that you can change editing modes in order to do different things. There are 3 primarily used modes: **Normal**, **Insert**, and **Visual** mode.
@@ -40,7 +40,7 @@ Vim is a modal text editor, meaning that you can change editing modes in order t
 -   Type in commands with `:`
     -   Save with `:w`
     -   Exit with `:q`
--   Explore more commands online! Here’s a cool [cheat sheet](https://devhints.io/vim) to get you started.
+-   Explore more commands online! Here's a cool [cheat sheet](https://devhints.io/vim) to get you started.
 
 #### Insert mode: 
 ![Example](https://d26aqo05ggejx9.cloudfront.net/i.gif)
@@ -58,18 +58,117 @@ Vim is a modal text editor, meaning that you can change editing modes in order t
 
 A key feature of `vim` is **chaining together commands**. Normal mode is essentially a massive amount of shortcuts that you can combine to quickly navigate and edit a file. Want to move down 3 lines? You know that `j` means move down 1 line, so you can use `3j` to move down 3. `d` is for deletion and `w` is to jump to the next word, so what does `dw` do?
 
+> I live VIM very much! It gives me fast! It's the god of Editor !!!
+>
+> The bare VIM is also POWERFULL !!!
+>
+> Although learning Vim is a painful process, you will thank it once you master it. Never give up!
+>
+> This is my [note](./vim/01_vim基础.md) during my learning process of Vim. 
+
 ### Questions
+
 Try playing around with [lab2.md](https://raw.githubusercontent.com/0xcf/decal-web/master/labs/2.md) while looking up some new commands. Use `wget` to download it!
 
-1.  How would you delete the previous 10 lines?
-2.  How would you jump back to the shell without exiting `vim`?
-3.  How would you edit a new file alongside another file?
-4.  How would you indent a block of text?
-5.  Tell us about one other cool vim feature you found out about that isn’t mentioned in this lab!
+1. How would you delete the previous 10 lines?
 
-## A quick intro to tmux(Optional) 
+   > In normal mode:	`10k10dd`
+   >
+   
+2. How would you jump back to the shell without exiting `vim`?
 
-While we reccomend that you complete this section of the lab, it’s completely optional and will not affect your lab grade. Feel free to skip ahead to the [Scripting Section](https://decal.ocf.berkeley.edu/labs/2/#scripting).
+   > There are many ways to achieve this requirement here :
+   >
+   > - Suspend VIM with `Ctrl+z`
+   >
+   >   In VIM:
+   >
+   >   ```vim
+   >   Ctrl+Z
+   >   ```
+   >
+   >   Then in shell:
+   >
+   >   ```shell
+   >   # You're back in shell, Vim is running in background
+   >   jobs        # See background jobs
+   >   fg          # Resume Vim (bring to foreground)
+   >   ```
+   >   
+   > - Run a single shell command
+   >
+   >   ```vim
+   >   :!command
+   >   ```
+   >
+   >   Examples:
+   >
+   >   ```shell
+   >   :!ls -la     # List files
+   >   :!pwd        # Show current directory
+   >   :!git status # Run git command
+   >   :!python %   # Run current Python file
+   >   ```
+   >
+   > - Start an interactive shell
+   >
+   >   In VIM:
+   >   ```vim
+   >   :terminal  #Open terminal in Vim (Neovim)
+   >   ```
+   >   Exit the shell with `exit` or `Ctrl+D` to return to Vim.
+
+
+3. How would you edit a new file alongside another file?
+
+   > | Method           | Command            | Best For                            |
+   > | :--------------- | :----------------- | :---------------------------------- |
+   > | Horizontal split | `:sp filename`     | Side-by-side editing                |
+   > | Vertical split   | `:vsp filename`    | Side-by-side editing                |
+   > | New tab          | `:tabnew filename` | Organization, less screen split     |
+   > | New buffer       | `:e filename`      | Quick switch, not simultaneous view |
+   > | From shell       | `vim -O f1 f2`     | Starting with multiple files        |
+
+4. How would you indent a block of text?
+
+   > - In Normal Mode - Visual Selection
+   >	 ```
+   > 	 V                    " Select current line (Visual Line mode)
+   >	 jjjj                 " Move down to select more lines
+   > 	>                    " Indent right (shiftwidth)
+   > 	<                    " Indent left (shiftwidth)
+   > 	```
+   >	
+   > 	Or:
+   >	```
+   >	5>>                  " Indent 5 lines right from cursor
+   > 	5<<                  " Indent 5 lines left from cursor
+   >	```
+   > 
+   > -  In Visual Mode (Once Selected)
+   > 	```
+   >	>                    " Indent right once
+   >	2>                   " Indent right twice
+   >	<                    " Indent left once
+   > 	.                    " Repeat last indent
+   >	```
+   > 
+   >- Using Text Objects
+   >	 ```
+   >	>ip                  " Indent inner paragraph
+   >	>ap                  " Indent around paragraph
+   >	>i}                  " Indent inside curly braces
+   >	>a}                  " Indent including curly braces
+   >	>it                  " Indent inside XML/HTML tag
+   >	```
+   
+5. Tell us about one other cool vim feature you found out about that isn't mentioned in this lab!
+
+   > macro of VIM 
+
+## A quick intro to tmux(Optional)
+
+While we reccomend that you complete this section of the lab, it's completely optional and will not affect your lab grade. Feel free to skip ahead to the [Scripting Section](https://decal.ocf.berkeley.edu/labs/2/#scripting).
 
 ![Example](Lab 2 - Core Shell & Shell Scripting _ OCF Sysadmin DeCal.assets/tmux-tips.png)
 
@@ -93,12 +192,12 @@ While we reccomend that you complete this section of the lab, it’s completely 
 
 Some things to note:
 
--   The top left panel is resized. By how much, it doesn’t matter.
+-   The top left panel is resized. By how much, it doesn't matter.
 -   The top right panel is named “Hello World”. (You can see this name displayed on the bottom left.)
--   You don’t need to run any of the commands I did, but they do look pretty cool :) Try to figure out what command the bottom panel is running, and what it does!
--   Don’t worry about copying the layout exactly. The purpose of this exercise is simply to help you get comfortable making custom layouts in tmux.
+-   You don't need to run any of the commands I did, but they do look pretty cool :) Try to figure out what command the bottom panel is running, and what it does!
+-   Don't worry about copying the layout exactly. The purpose of this exercise is simply to help you get comfortable making custom layouts in tmux.
 
-10.  If you haven’t already, detach from your current tmux session using `Ctrl+b d`. Now, what command would you type to attach back to it?
+10.  If you haven't already, detach from your current tmux session using `Ctrl+b d`. Now, what command would you type to attach back to it?
 11.  What command will delete your session?
 12.  What command will create a new session?
 
@@ -114,11 +213,11 @@ Before you jump into the assignment we reccomend reading through our [Scripting 
 
 ## Scripting Lab Assignment 
 
-You’ll be completing a classic first shell scripting assignment: make a phonebook.
+You'll be completing a classic first shell scripting assignment: make a phonebook.
 
 Write a shell script `phonebook` which has the following behavior:
 
--   `./phonebook new <name> <number>` adds an entry to the phonebook. Don’t worry about duplicates (always add a new entry, even if the name is the same).
+-   `./phonebook new <name> <number>` adds an entry to the phonebook. Don't worry about duplicates (always add a new entry, even if the name is the same).
   
 -   `./phonebook list` displays every entry in the phonebook (in no particular order). If the phonebook has no entries, display `phonebook is empty`
   
@@ -159,12 +258,12 @@ phonebook is empty
 
 ```
 
-If you run into an edge case that isn’t described here, you can handle it however you wish (or don’t handle it at all). You can assume all inputs are in the correct format.
+If you run into an edge case that isn't described here, you can handle it however you wish (or don't handle it at all). You can assume all inputs are in the correct format.
 
 ## Skeleton Code 
 To help you in this task, skeleton code for this lab can be found [here](https://github.com/0xcf/decal-labs/tree/master/2). Once you are done with this task, you can submit your work on Gradescope.
 
-**As an optional (but recommended) assignment:** Try implementing the same Phonebook behavior, but in `python`! This will highlight some of the strengths and weaknesses between the two languages. If you’re already familiar with `python`, you may find it helpful to do this before implementing it in `bash`.
+**As an optional (but recommended) assignment:** Try implementing the same Phonebook behavior, but in `python`! This will highlight some of the strengths and weaknesses between the two languages. If you're already familiar with `python`, you may find it helpful to do this before implementing it in `bash`.
 
 ## Some tips to make things easier
 
@@ -281,11 +380,11 @@ hello from python
 
 ## Submitting the lab 
 
-Once you’re done remember to submit your answers to Gradescope. There are multiple valid answers for some of the questions.
+Once you're done remember to submit your answers to Gradescope. There are multiple valid answers for some of the questions.
 
 For the scripting assignment, you will need to upload a file containing your script. If you edit and test your script in your VM using `vim` or another shell editor, you can [copy the file to your local machine using `scp`](https://linuxize.com/post/how-to-use-scp-command-to-securely-transfer-files/#copy-a-remote-file-to-a-local-system-using-the-scp-command) or simply copy-paste the text into a local file.
 
-Don’t be stressed about getting something correct; just have fun exploring.We’ll release the answers after the lab is due!
+Don't be stressed about getting something correct; just have fun exploring.We'll release the answers after the lab is due!
 
 ## Additional Resources 
 
