@@ -1,3 +1,7 @@
+教材：[Programming in Lua, Fourth Edition](./Programming in Lua, Fourth Edition.pdf)
+
+
+
 以下内容均由deepseek生成：
 
 这里只是为了快速的了解lua

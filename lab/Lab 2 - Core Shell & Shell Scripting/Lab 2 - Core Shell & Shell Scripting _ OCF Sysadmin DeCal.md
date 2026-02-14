@@ -166,6 +166,12 @@ Try playing around with [lab2.md](https://raw.githubusercontent.com/0xcf/decal-w
 
    > macro of VIM 
 
+
+
+<br>
+
+
+
 ## A quick intro to tmux(Optional)
 
 While we reccomend that you complete this section of the lab, it's completely optional and will not affect your lab grade. Feel free to skip ahead to the [Scripting Section](https://decal.ocf.berkeley.edu/labs/2/#scripting).
@@ -184,7 +190,9 @@ While we reccomend that you complete this section of the lab, it's completely op
 -   Swap current pane with `Ctrl-b o`
 -   Find more information about tmux online. You might find \[this cheat sheet\]\[Tmux cheat sheet\] helpful!
 
-### Questions (Optional) 
+> This is the [note](./vim/03_Tmux.md) when I learn Tmux.
+
+### Questions (Optional)
 
 6.  Make a new tmux session. Using tmux shortcuts, try to make your session have a similar layout to the one below, and **upload a screenshot of it to Gradescope!**
 
@@ -378,7 +386,7 @@ hello from python
 
 -   If you are getting permission denied issues, you will probably need to make your `phonebook.sh` executable: `chmod +x phonebook.sh`
 
-## Submitting the lab 
+## Submitting the lab
 
 Once you're done remember to submit your answers to Gradescope. There are multiple valid answers for some of the questions.
 
