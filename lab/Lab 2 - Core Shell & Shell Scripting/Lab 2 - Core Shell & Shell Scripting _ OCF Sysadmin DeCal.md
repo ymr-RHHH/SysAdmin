@@ -200,18 +200,49 @@ While we reccomend that you complete this section of the lab, it's completely op
 
 Some things to note:
 
--   The top left panel is resized. By how much, it doesn't matter.
--   The top right panel is named “Hello World”. (You can see this name displayed on the bottom left.)
--   You don't need to run any of the commands I did, but they do look pretty cool :) Try to figure out what command the bottom panel is running, and what it does!
--   Don't worry about copying the layout exactly. The purpose of this exercise is simply to help you get comfortable making custom layouts in tmux.
+- The top left panel is resized. By how much, it doesn't matter.
 
-10.  If you haven't already, detach from your current tmux session using `Ctrl+b d`. Now, what command would you type to attach back to it?
-11.  What command will delete your session?
-12.  What command will create a new session?
+- The top right panel is named “Hello World”. (You can see this name displayed on the bottom left.)
 
-## Scripting 
+- You don't need to run any of the commands I did, but they do look pretty cool :) Try to figure out what command the bottom panel is running, and what it does!
 
-## Why Scripting? 
+- Don't worry about copying the layout exactly. The purpose of this exercise is simply to help you get comfortable making custom layouts in tmux.
+
+  
+
+10. If you haven't already, detach from your current tmux session using `Ctrl+b d`. Now, what command would you type to attach back to it?
+
+   > 先 `tmux ls` 看一下你要连哪个 session
+   >
+   > 然后 `tmux attach -t <session-name/num>`
+
+11. What command will delete your session?
+
+    > 删除指定的session：
+    >
+    > `tmux kill-session -t <session-name/num>`
+    >
+    > 
+    >
+    > 删除所有session（除了当前连接的）
+    > `tmux kill-session -a`
+    >
+    > 
+    >
+    > 删除所有session
+    >
+    > `tmux kill-server`
+
+
+12. What command will create a new session?
+
+    > `tmux new`
+
+<br>
+
+## Scripting
+
+## Why Scripting?
 
 Many of the tasks that someone would like to perform on a computer are regular, require repetition, or are menial or tedious to do by hand. Shell scripting allows one to interact programmatically with a shell to do certain tasks. For example, the command for scanning log files in the previous topic guide could be automated to be performed on a schedule by means of a shell script. `bash` scripts are an incredibly powerful tool for sysadmins to automate tasks that are otherwise difficult to remember or long-running.
 
@@ -234,8 +265,7 @@ Write a shell script `phonebook` which has the following behavior:
 -   `./phonebook clear` deletes the entire phonebook.
   
 -   `./phonebook lookup <name>` displays all phone number(s) associated with that name. You can assume all phone numbers are in the form `ddd-ddd-dddd` where `d` is a digit from 0-9.
-  
-    -   **NOTE:** You can print the name as well as the number for each line. For an additional challenge, try printing all phone numbers _without_ their names. (See the example below for more details)
+  -   **NOTE:** You can print the name as well as the number for each line. For an additional challenge, try printing all phone numbers _without_ their names. (See the example below for more details)
 
 For example,
 
@@ -263,12 +293,12 @@ Tux Penguin 555-666-7777
 $ ./phonebook clear
 $ ./phonebook list
 phonebook is empty
-
 ```
 
 If you run into an edge case that isn't described here, you can handle it however you wish (or don't handle it at all). You can assume all inputs are in the correct format.
 
-## Skeleton Code 
+## Skeleton Code
+
 To help you in this task, skeleton code for this lab can be found [here](https://github.com/0xcf/decal-labs/tree/master/2). Once you are done with this task, you can submit your work on Gradescope.
 
 **As an optional (but recommended) assignment:** Try implementing the same Phonebook behavior, but in `python`! This will highlight some of the strengths and weaknesses between the two languages. If you're already familiar with `python`, you may find it helpful to do this before implementing it in `bash`.
@@ -297,8 +327,6 @@ $ cat foobar.txt
 hello
 $ > foobar.txt
 $ cat foobar.txt
-$
-
 ```
 
 -   Remember that you can simply write to and read from a file to persist data.
@@ -315,7 +343,6 @@ jello 123
 $ sed -i "s/[0-9]\{3\}/world/g" foobar.txt
 $ cat foobar.txt
 jello world
-
 ```
 
 -   Recall that `bash` exposes its command line arguments through the `$<integer>` positional parameters:
@@ -326,14 +353,12 @@ jello world
 
 echo "$1"
 echo "$2"
-
 ```
 
 ```bash
 $ ./argscript.sh foo bar
 foo
 bar
-
 ```
 
 -   In `bash`, single quotes `''` preserve the literal value of the characters they enclose. Double quotes `""` preserve the literal value of all characters except for `$`, backticks `` ` ``, and the backslash `\\`. The most important implication of this is that double quotes allow for variable interpolation, while single quotes do not. You can think of single quotes and the stronger “escape everything” syntax while double quotes are the more lax “escape most things” syntax.
@@ -343,7 +368,6 @@ $ echo '$LANG'
 $LANG
 $ echo "$LANG"
 en_US.UTF-8
-
 ```
 
 -   In `python`, you can interact with command-line arguments through the `sys.argv` list
@@ -356,14 +380,12 @@ import sys
 print(sys.argv[1]) 
 print(sys.argv[2])
 # end of file
-
 ```
 
 ```bash
 $ ./argscript.py foo bar
 foo
 bar
-
 ```
 
 -   `python` lets you manipulate files with the `open` function, commonly used with the `with` control structure
@@ -374,14 +396,12 @@ bar
 
 with open('./newfile.txt', 'w') as f: f.write("hello from python\n")
 # end of file
-
 ```
 
 ```bash
 $ python fileman.py
 $ cat newfile.txt
 hello from python
-
 ```
 
 -   If you are getting permission denied issues, you will probably need to make your `phonebook.sh` executable: `chmod +x phonebook.sh`
